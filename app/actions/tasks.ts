@@ -29,3 +29,23 @@ export async function toggleTask(id: string) {
 
   revalidatePath("/");
 }
+
+export async function deleteTask(id: string) {
+  await prisma.task.delete({ where: { id } });
+
+  revalidatePath("/");
+}
+
+export async function updateTaskTitle(id: string, title: string) {
+  const trimmedTitle = title.trim();
+  if (!trimmedTitle) {
+    return;
+  }
+
+  await prisma.task.update({
+    where: { id },
+    data: { title: trimmedTitle },
+  });
+
+  revalidatePath("/");
+}
