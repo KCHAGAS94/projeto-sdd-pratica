@@ -2,6 +2,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+This project uses PostgreSQL via Prisma. Copy `.env.example` to `.env` and set `DATABASE_URL` to your PostgreSQL connection string, then apply migrations:
+
+```bash
+npx prisma migrate dev
+```
+
 First, run the development server:
 
 ```bash
