@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { CreateTaskForm } from "@/app/components/create-task-form";
-import { TaskItem } from "@/app/components/task-item";
+import { TaskList } from "@/app/components/task-list";
 
 export default async function Home() {
   const tasks = await prisma.task.findMany({
-    orderBy: { createdAt: "asc" },
+    orderBy: { position: "asc" },
   });
 
   return (
@@ -21,16 +21,14 @@ export default async function Home() {
             No tasks yet. Add one above to get started.
           </p>
         ) : (
-          <ul className="flex flex-col gap-2">
-            {tasks.map((task) => (
-              <TaskItem
-                key={task.id}
-                id={task.id}
-                title={task.title}
-                completed={task.completed}
-              />
-            ))}
-          </ul>
+          <TaskList
+            tasks={tasks.map((task) => ({
+              id: task.id,
+              title: task.title,
+              notes: task.notes,
+              completed: task.completed,
+            }))}
+          />
         )}
       </main>
     </div>

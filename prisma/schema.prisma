@@ -15,6 +15,8 @@ datasource db {
 model Task {
   id        String   @id @default(cuid())
   title     String
+  notes     String?
   completed Boolean  @default(false)
+  position  Int
   createdAt DateTime @default(now())
 }

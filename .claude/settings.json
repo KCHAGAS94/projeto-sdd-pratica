@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tail -60 /tmp/nextdev.log)",
+      "Read(//tmp/**)",
+      "Bash(tail -40 /tmp/nextdev.log)",
+      "Bash(tail -20 /tmp/nextdev.log)",
+      "Bash(netstat -ano)",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(node test-reorder.mjs)",
+      "Bash(rm -f \"c:/Users/Roger/Desktop/js-praticando/projeto-sdd-pratica/test-reorder.mjs\")",
+      "Bash(npx tsx *)",
+      "Bash(node --env-file=.env node_modules/.bin/tsx test-reorder.ts)",
+      "Bash(npx dotenv *)",
+      "Bash(export DATABASE_URL=\"postgresql://kchagas:014510@localhost:5432/projeto-sdd-pratica\")",
+      "Bash(rm -f test-reorder.ts)",
+      "Skill(openspec-archive-change)",
+      "Skill(openspec-archive-change:*)"
+    ]
+  }
+}

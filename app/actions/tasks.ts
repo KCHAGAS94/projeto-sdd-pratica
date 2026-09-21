@@ -9,8 +9,15 @@ export async function createTask(formData: FormData) {
     return;
   }
 
+  const notes = String(formData.get("notes") ?? "").trim();
+
+  const lastTask = await prisma.task.findFirst({
+    orderBy: { position: "desc" },
+  });
+  const position = lastTask ? lastTask.position + 1 : 0;
+
   await prisma.task.create({
-    data: { title },
+    data: { title, notes: notes || null, position },
   });
 
   revalidatePath("/");
@@ -46,6 +53,30 @@ export async function updateTaskTitle(id: string, title: string) {
     where: { id },
     data: { title: trimmedTitle },
   });
+
+  revalidatePath("/");
+}
+
+export async function updateTaskNotes(id: string, notes: string) {
+  const trimmedNotes = notes.trim();
+
+  await prisma.task.update({
+    where: { id },
+    data: { notes: trimmedNotes || null },
+  });
+
+  revalidatePath("/");
+}
+
+export async function reorderTasks(orderedIds: string[]) {
+  await prisma.$transaction(
+    orderedIds.map((id, index) =>
+      prisma.task.update({
+        where: { id },
+        data: { position: index },
+      }),
+    ),
+  );
 
   revalidatePath("/");
 }
